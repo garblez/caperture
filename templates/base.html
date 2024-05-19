@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ .Title }}</title>
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Caperture Photography</h1>
+    </header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/contact">Contact</a>
+      <a href="/gallery">Gallery</a>
+    </nav>
+    <main hx-boost="true">
+      {{ template "content" . }}
+    </main>
+    <footer>
+      <p>&copy; 2024 Jonathan Bain</p>
+    </footer>
+  </body>
+</html>
