@@ -1,14 +1,15 @@
 {{ define "content" }}
 <div id="contact-form">
   <h2>{{.Heading}}</h2>
-  <form hx-post="/contact" hx-swap="innerHTML" hx-target="#contact-form">
+  <form hx-post="/contact" hx-swap="innerHTML" hx-target="#contact-form"
+    style="display: flex; flex-direction: column; row-gap: 1em;">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required>
     <label for="email">Your Email:</label>
     <input type="email" id="email" name="email" required>
     <label for="details">Details:</label>
     <textarea id="details" name="details" required></textarea>
-    <button type="submit">Submit</button>
+    <button style="width: fit-content; align-self: end" type="submit">Submit</button>
   </form>
 </div>
 {{ end }}
