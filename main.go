@@ -65,18 +65,21 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
     name := r.Form.Get("name")
     email := r.Form.Get("email")
     details := r.Form.Get("details")
+    timeslot := r.Form.Get("timeslot")
 
     submission := struct{
       Name string
       Email string
       Details string
+      Timeslot string
     }{
       Name: name,
       Email: email,
       Details: details,
+      Timeslot: timeslot,
     }
 
-    go sendEmail(name, email, details)
+    go sendEmail(name, email, details, timeslot)
 
     log.Printf("Contact form sent with following details: %v", submission)
     if err := templates["thanks"].Execute(w, submission); err != nil {
@@ -114,7 +117,7 @@ func galleryHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func sendEmail(name, customerEmail, details string) {
+func sendEmail(name, customerEmail, details, timeslot string) {
   smtpHost := "smtp.gmail.com"
   smtpPort := "587"
 
