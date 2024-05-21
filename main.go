@@ -19,6 +19,7 @@ func main() {
   gsmtpEmail = os.Getenv("GSMTP_EMAIL")
   gsmtpPassword = os.Getenv("GSMTP_PASSWORD")
   gsmtpRecipient = os.Getenv("GSMTP_RECIPIENT")
+  fs := http.FileServer(http.Dir("./static/"))
 
   templates = make(map[string]*template.Template)
   templates["home"] = template.Must(template.ParseFiles("templates/base.html", "templates/home.html"))
@@ -30,6 +31,7 @@ func main() {
   http.HandleFunc("/", homeHandler)
   http.HandleFunc("/contact", contactHandler)
   http.HandleFunc("/gallery", galleryHandler)
+  http.Handle("/static/", http.StripPrefix("/static/", fs))
 
   log.Println("Starting the server on :8080")
   if err := http.ListenAndServe(":8080", nil); err != nil {
