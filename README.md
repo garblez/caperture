@@ -11,3 +11,6 @@ This just uses a simple net/smtp call to send the email to a specified email add
 * `GSMTP_PASSWORD` The app-specific password for the `GSMTP_EMAIL` account
 
 If any of these are undefined, an error will occur on the backend and will be logged (as of now, there are no persistent log files and errors are just written to the standard Logger output.) The customer-facing frontend currently just displays the success response fragment (thanks.html) irrespective of outcome.
+
+### Deployment
+Deployment is done by git pushing to the `deploy` remote repository. The post-receive hook should then fire off a bash script for building the project in /srv/tmp and moving it (on success) /src/www.
