@@ -14,3 +14,5 @@ If any of these are undefined, an error will occur on the backend and will be lo
 
 ### Deployment
 Deployment is done by git pushing to the `deploy` remote repository. The post-receive hook should then fire off a bash script for building the project in /srv/tmp and moving it (on success) /src/www.
+
+NGINX is used as the server of choice to provide the application.
