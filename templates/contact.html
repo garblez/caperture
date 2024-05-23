@@ -1,17 +1,59 @@
 {{ define "content" }}
 <div id="contact-form">
   <h2>{{.Heading}}</h2>
+  <br/>
   <form hx-post="/contact" hx-swap="innerHTML" hx-target="#contact-form"
-    style="display: flex; flex-direction: column; row-gap: 1em;">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required>
-    <label for="email">Your Email:</label>
-    <input type="email" id="email" name="email" required>
-    <label for="timeslot">Event Date and Time:</label>
-    <input type="datetime-local" id="timeslot" name="timeslot" required>
-    <label for="details">Details:</label>
-    <textarea id="details" name="details" required></textarea>
-    <button style="width: fit-content; align-self: end" type="submit">Submit</button>
+                                               style="display: flex; flex-direction: column; row-gap: 1em;"
+                                               class="relative mt-2 rounded-md shadow-sm container justify-center">
+    <div class="field is-horizontal">
+      <div class="field-body">
+        <div class="field">
+          <label for="name" class="label">Name:</label>
+          <div class="control">
+            <input class="input" type="text" id="name" name="name" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="phonenumber" class="label">Phone:</label>
+          <div class="field has-addons">
+            <p class="control">
+            <a class="button is-static">
+              +44
+            </a>
+            </p>
+            <p class="control is-expanded">
+            <input class="input" name="phonenumber" id="phonenumber" type="tel" placeholder="Your phone number">
+            </p>
+          </div>
+          <p class="help">Do not enter the first zero</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="field">
+      <label class="label" for="email">Your Email:</label>
+      <div class="control has-icons-left">
+        <input class="input" type="email" id="email" name="email" required>
+        <span class="icon is-left">
+          <i class="fas fa-envelope fa-sm"></i>
+        </span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="details" class="label">Details:</label>
+      <div class="control">
+        <textarea class="textarea" id="details" name="details" required></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <button class="button" style="width: fit-content; align-self: end" type="submit">Submit</button>
+      </div>
+    </div>
   </form>
 </div>
 {{ end }}
