@@ -9,13 +9,21 @@
   </head>
   <body style="display: flex; flex-direction: column; justify-content: space-between; min-height: 100%;">
     <div style="flex: 0.2; display: flex; flex-direction: row; min-width: 100%">
-      <header style="flex: 1;">
-        <img src="/static/images/test.png" alt="Didn't load properly!" width="300px">
-        <h1 class="title">Caperture Photography</h1>
-      </header>
-      <nav style="flex: 0.2; justify-self: flex-end">
-        <a href="/">Home</a>
-        <a href="/contact">Contact</a>
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <img src="/static/images/test.png" alt="Didn't load properly!" width="150px" class="navbar-item">
+          <h1 class="navbar-item">
+            Caperture Photography
+          </h1>
+        </div>
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <div class="buttons">
+            <a class="navbar-item" href="/">Home</a>
+            <a class="navbar-item button is-primary" href="/contact">Contact</a>
+            </div>
+          </div>
+        </div>
       </nav>
     </div>
 
