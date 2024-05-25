@@ -7,34 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/bulma/css/bulma.min.css">
   </head>
-  <body style="display: flex; flex-direction: column; justify-content: space-between; min-height: 100%;">
-    <div style="flex: 0.2; display: flex; flex-direction: row; min-width: 100%">
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <img src="/static/images/test.png" alt="Didn't load properly!" width="150px" class="navbar-item">
-          <h1 class="navbar-item">
+  <body style="display: flex; flex-direction: column; justify-content: space-between; height: 100vh;">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a href="/" class="navbar-item title">
             Caperture Photography
-          </h1>
+          </a>
         </div>
-        <div class="navbar-menu">
-          <div class="navbar-end">
+        <div class="navbar-end">
+          <div class="navbar-item">
             <div class="buttons">
-            <a class="navbar-item" href="/">Home</a>
-            <a class="navbar-item button is-primary" href="/contact">Contact</a>
+              <a class="navbar-item button" href="/contact">Contact</a>
             </div>
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
 
-    <main hx-boost="true" style="flex 1" class="container">
+
+    <main hx-boost="true" style="flex 1" class="pt-4">
       {{ template "content" . }}
     </main>
+    
+    <br/>
 
-    <hr />
-
-    <footer style="flex 0.2; justify-self: flex-end;">
-      <p>&copy; 2024 Jonathan Bain</p>
+    <footer class="footer" style="is-flex-align-items-flex-end mt-auto">
+      <div class="content has-text-centered">
+        <p>&copy; 2024 Jonathan Bain</p>
+      </div>
     </footer>
   </body>
 </html>

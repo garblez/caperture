@@ -45,10 +45,12 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
     Title string
     Heading string
     Message string
+    SubMessage string
   }{
     Title: "Home Page",
-    Heading: "Glasgow Photographer and Alumnus of The Garage Nightclub",
-    Message: "Who I am will go here.",
+    Heading: "Hi, I'm Jonathan!",
+    Message: "I'm an experienced Glasgow based nightlife and events photographer.", 
+    SubMessage: "Let's talk photos!",
   }
 
   if err := templates["home"].ExecuteTemplate(w, "base.html", data); err != nil {
@@ -67,21 +69,21 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
     name := r.Form.Get("name")
     email := r.Form.Get("email")
     details := r.Form.Get("details")
-    timeslot := r.Form.Get("timeslot")
+    phonenumber := r.Form.Get("phonenumber")
 
     submission := struct{
       Name string
       Email string
       Details string
-      Timeslot string
+      PhoneNumber string
     }{
       Name: name,
       Email: email,
       Details: details,
-      Timeslot: timeslot,
+      PhoneNumber: phonenumber,
     }
 
-    go sendEmail(name, email, details, timeslot)
+    go sendEmail(name, email, details, phonenumber)
 
     log.Printf("Contact form sent with following details: %v", submission)
     if err := templates["thanks"].Execute(w, submission); err != nil {
@@ -92,9 +94,11 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
     data := struct {
       Title string
       Heading string
+      SubHeading string
     }{
       Title: "Contact Page",
-      Heading: "Contact me using this form and I will get back to you as soon as I can.",
+      Heading: "Contact",
+      SubHeading: "Contact me using this form and I will get back to you as soon as I can.",
     }
 
     if err := templates["contact"].ExecuteTemplate(w, "base.html", data); err != nil {
@@ -119,11 +123,11 @@ func galleryHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-func sendEmail(name, customerEmail, details, timeslot string) {
+func sendEmail(name, customerEmail, details, phonenumber string) {
   smtpHost := "smtp.gmail.com"
   smtpPort := "587"
 
-  message := fmt.Sprintf("Subject: Gig Request from %s\r\n\r%s\n\nRequest sent from: %s", name, details, customerEmail)
+  message := fmt.Sprintf("Subject: Gig Request from %s\r\n\r%s\n\nRequest sent from: %s\nTel: (+44) 0%s", name, details, customerEmail, phonenumber)
 
   auth := smtp.PlainAuth("", gsmtpEmail, gsmtpPassword, smtpHost)
 
