@@ -26,7 +26,7 @@
     </nav>
 
 
-    <main hx-boost="true" style="flex 1" class="pt-4">
+    <main hx-boost="true" style="flex 1" class="mt-4">
       {{ template "content" . }}
     </main>
     
@@ -34,7 +34,7 @@
 
     <footer class="footer" style="is-flex-align-items-flex-end mt-auto">
       <div class="content has-text-centered">
-        <p>&copy; 2024 Jonathan Bain</p>
+        <p>{{ .CopyRight }}</p>
       </div>
     </footer>
   </body>

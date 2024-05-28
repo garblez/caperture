@@ -7,19 +7,25 @@ import (
   "net/http"
   "net/smtp"
   "html/template"
-
+  "time"
 )
 
 var templates map[string]*template.Template
 var gsmtpEmail string
 var gsmtpPassword string
 var gsmtpRecipient string
+var now time.Time
+var currentYear int
 
 func main() {
+  now = time.Now()
+  currentYear, _, _ = now.Date()
+
   gsmtpEmail = os.Getenv("GSMTP_EMAIL")
   gsmtpPassword = os.Getenv("GSMTP_PASSWORD")
   gsmtpRecipient = os.Getenv("GSMTP_RECIPIENT")
   fs := http.FileServer(http.Dir("./static/"))
+
 
   templates = make(map[string]*template.Template)
   templates["home"] = template.Must(template.ParseFiles("templates/base.html", "templates/home.html"))
@@ -39,18 +45,24 @@ func main() {
   }
 }
 
+func Copyright() string {
+  return fmt.Sprintf("© %d Caperture Photography", currentYear)
+}
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
+
   data := struct {
     Title string
     Heading string
     Message string
     SubMessage string
+    CopyRight string
   }{
     Title: "Home Page",
-    Heading: "Hi, I'm Jonathan!",
-    Message: "I'm an experienced Glasgow based nightlife and events photographer.", 
+    Heading: "Hi!",
+    Message: "I'm an experienced Glasgow based photographer.", 
     SubMessage: "Let's talk photos!",
+    CopyRight: Copyright(),
   }
 
   if err := templates["home"].ExecuteTemplate(w, "base.html", data); err != nil {
@@ -95,10 +107,12 @@ func contactHandler(w http.ResponseWriter, r *http.Request) {
       Title string
       Heading string
       SubHeading string
+      CopyRight string
     }{
       Title: "Contact Page",
       Heading: "Contact",
       SubHeading: "Contact me using this form and I will get back to you as soon as I can.",
+      CopyRight: Copyright(),
     }
 
     if err := templates["contact"].ExecuteTemplate(w, "base.html", data); err != nil {
@@ -111,9 +125,11 @@ func galleryHandler(w http.ResponseWriter, r *http.Request) {
   data := struct {
     Title string
     Heading string
+    CopyRight string
   }{
     Title: "Gallery Page",
     Heading: "Place some photos here and we should be good to go. Likely just link to B2",
+    CopyRight: Copyright(),
   }
 
 
