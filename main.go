@@ -1,6 +1,7 @@
 package main
 
 import (
+  "caperture/b2"
   "log"
   "fmt"
   "os"
@@ -14,6 +15,9 @@ var templates map[string]*template.Template
 var gsmtpEmail string
 var gsmtpPassword string
 var gsmtpRecipient string
+var b2KeyID string
+var b2Key string
+const bucketName string = "jonathan-bain-caperture-photography"
 var now time.Time
 var currentYear int
 
@@ -24,6 +28,10 @@ func main() {
   gsmtpEmail = os.Getenv("GSMTP_EMAIL")
   gsmtpPassword = os.Getenv("GSMTP_PASSWORD")
   gsmtpRecipient = os.Getenv("GSMTP_RECIPIENT")
+
+  b2KeyID = os.Getenv("B2_KEY_ID")
+  b2Key = os.Getenv("B2_KEY")
+
   fs := http.FileServer(http.Dir("./static/"))
 
 
@@ -32,11 +40,13 @@ func main() {
   templates["contact"] = template.Must(template.ParseFiles("templates/base.html", "templates/contact.html"))
   templates["gallery"] = template.Must(template.ParseFiles("templates/base.html", "templates/gallery.html"))
   templates["thanks"] = template.Must(template.ParseFiles("templates/thanks.html"))
+  templates["photos"] = template.Must(template.ParseFiles("templates/base.html", "templates/files.html"))
 
 
   http.HandleFunc("/", homeHandler)
   http.HandleFunc("/contact", contactHandler)
   http.HandleFunc("/gallery", galleryHandler)
+  http.HandleFunc("/photos", photosHandler)
   http.Handle("/static/", http.StripPrefix("/static/", fs))
 
   log.Println("Starting the server on :8080")
@@ -134,6 +144,32 @@ func galleryHandler(w http.ResponseWriter, r *http.Request) {
 
 
   if err := templates["gallery"].ExecuteTemplate(w, "base.html", data); err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+  }
+}
+
+
+func photosHandler(w http.ResponseWriter, r *http.Request) {
+  links, err := b2.GetBucketFiles(b2KeyID, b2Key, bucketName)
+  if err != nil {
+    log.Println(err)
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+
+  data := struct {
+    Title string
+    Heading string
+    CopyRight string
+    Items []b2.Link
+  }{
+    Title: "Photos Page",
+    Heading: "Here are photos from the gig. Make sure to download the file and post it as these links are temporary!",
+    CopyRight: Copyright(),
+    Items: links,
+  }
+
+  if err := templates["photos"].ExecuteTemplate(w, "base.html", data); err != nil {
     http.Error(w, err.Error(), http.StatusInternalServerError)
   }
 }

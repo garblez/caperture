@@ -1,0 +1,8 @@
+{{ define "content" }}
+<h2>{{.Heading}}</h2>
+<ul>
+  {{range .Items}}
+    <li><a href="{{.Href}}">{{.Text}}</a></li>
+  {{end}}
+</ul>
+{{ end }}
