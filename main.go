@@ -32,6 +32,12 @@ func main() {
   b2KeyID = os.Getenv("B2_KEY_ID")
   b2Key = os.Getenv("B2_KEY")
 
+  log.Printf("Sender email: %s\n", gsmtpEmail)
+  log.Printf("Sender password: %s\n", gsmtpPassword)
+  log.Printf("Recipient email: %s\n", gsmtpRecipient)
+  log.Printf("B2 Key ID: %s\n", b2KeyID)
+  log.Printf("B2 Key: %s\n", b2Key)
+
   fs := http.FileServer(http.Dir("./static/"))
 
 
