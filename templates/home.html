@@ -1,6 +1,11 @@
 {{ define "content" }}
-<div>
-  <h2> {{.Heading}} </h2>
-  <p>{{.Message}}</p>
+<div class="hero">
+  <div class="hero-body">
+    <p class="title"> {{.Heading}} </p>
+    <p class="subtitle">{{.Message}}</p>
+    <a href="/contact" class="subtitle button">
+      {{.SubMessage}}
+    </a>
+  </div>
 </div>
 {{ end }}
