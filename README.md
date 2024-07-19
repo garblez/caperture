@@ -14,6 +14,9 @@ This just uses a simple net/smtp call to send the email to a specified email add
 
 If any of these are undefined, an error will occur on the backend and will be logged (as of now, there are no persistent log files and errors are just written to the standard Logger output.) The customer-facing frontend currently just displays the success response fragment (thanks.html) irrespective of outcome.
 
+#### Remote ENVIRONMENT variables
+The post-receive build script must provide correct environment variables for the binary of the website to operate correctly. Up-to-date values for each variable are retrieved using a linked Skate key-value store, inside the build script. This does not only allow the most current values to be used but allows a degree of remote access: on a computer with a linked Skate store, you can update these values as you see fit and then sync them. The build script when pushing to deploy syncs the Skate store first and then retrieves those changed values.
+
 ### Deployment
 Deployment is done by git pushing to the `deploy` remote repository. The post-receive hook should then fire off a bash script for building the project in /srv/tmp and moving it (on success) /src/www.
 
